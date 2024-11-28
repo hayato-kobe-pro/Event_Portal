@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>マイページ - イベントポータル</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .header {
+            background: white;
+            padding: 1rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .profile-section {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .profile-card {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            object-fit: cover;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 1rem;
+            border-radius: 8px;
+            background: #f8f9fa;
+        }
+
+        .badges-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .badge-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+        }
+
+        .badge-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .badge-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1rem;
+            background: #f8f9fa;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #007bff;
+        }
+
+        .history-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .history-item {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+
+        .rewards-section {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .reward-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .reward-image {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .reward-content {
+            padding: 1.5rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            margin: 1rem 0;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #007bff;
+            width: 75%;
+            border-radius: 4px;
+        }
+
+        .rank-badge {
+            background: #007bff;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            font-size: 1.5rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #0056b3;
+        }
+
+        @media (max-width: 768px) {
+            .profile-section {
+                grid-template-columns: 1fr;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <h1>マイページ</h1>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="profile-section">
+            <div class="profile-card">
+                <img src="/api/placeholder/150/150" alt="プロフィール" class="profile-image">
+                <h2>山田 太郎</h2>
+                <p>会員ランク: ゴールド</p>
+                <div class="rank-badge">
+                    <i class="fas fa-crown"></i> Gold Member
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill"></div>
+                </div>
+                <p>プラチナランクまで 250ポイント</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-star"></i>
+                    <h3>獲得ポイント</h3>
+                    <p>750 pt</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-calendar-check"></i>
+                    <h3>参加イベント数</h3>
+                    <p>15 件</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-medal"></i>
+                    <h3>獲得バッジ</h3>
+                    <p>8 個</p>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">獲得バッジ</h2>
+            <div class="badges-section">
+                <div class="badge-card">
+                    <div class="badge-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <h3>ファーストステップ</h3>
+                    <p>初めてのイベント参加</p>
+                </div>
+                <div class="badge-card">
+                    <div class="badge-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>常連参加者</h3>
+                    <p>10イベント達成</p>
+                </div>
+                <div class="badge-card">
+                    <div class="badge-icon">
+                        <i class="fas fa-certificate"></i>
+                    </div>
+                    <h3>セミナーマスター</h3>
+                    <p>セミナー5回参加</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="history-section">
+            <h2 class="section-title">参加履歴</h2>
+            <div class="history-item">
+                <img src="/api/placeholder/80/80" alt="イベント1" style="width: 80px; height: 80px; border-radius: 8px;">
+                <div>
+                    <h3>Tech Conference 2024</h3>
+                    <p>2024.11.15 参加</p>
+                </div>
+                <div>
+                    <span class="rank-badge">+50pt</span>
+                </div>
+            </div>
+            <div class="history-item">
+                <img src="/api/placeholder/80/80" alt="イベント2" style="width: 80px; height: 80px; border-radius: 8px;">
+                <div>
+                    <h3>AI Summit 2024</h3>
+                    <p>2024.11.01 参加</p>
+                </div>
+                <div>
+                    <span class="rank-badge">+50pt</span>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <h2 class="section-title">特典・クーポン</h2>
+            <div class="rewards-section">
+                <div class="reward-card">
+                    <img src="/api/placeholder/400/200" alt="特典1" class="reward-image">
+                    <div class="reward-content">
+                        <h3>次回イベント50%OFF</h3>
+                        <p>500ポイントで交換可能</p>
+                        <a href="#" class="btn">ポイント交換</a>
+                    </div>
+                </div>
+                <div class="reward-card">
+                    <img src="/api/placeholder/400/200" alt="特典2" class="reward-image">
+                    <div class="reward-content">
+                        <h3>VIPラウンジ利用券</h3>
+                        <p>300ポイントで交換可能</p>
+                        <a href="#" class="btn">ポイント交換</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // バッジ獲得時のアニメーション
+        document.querySelectorAll('.badge-card').forEach(badge => {
+            badge.addEventListener('mouseenter', function() {
+                this.querySelector('.badge-icon').style.transform = 'scale(1.1)';
+            });
+            badge.addEventListener('mouseleave', function() {
+                this.querySelector('.badge-icon').style.transform = 'scale(1)';
+            });
+        });
+
+        // ポイント交換ボタンのクリックハンドラ
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const rewardTitle = this.closest('.reward-card').querySelector('h3').textContent;
+                alert(`${rewardTitle}に交換しますか？`);
+            });
+        });
+    </script>
+</body>
+</html>

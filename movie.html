@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>動画詳細 - イベントポータル</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 2rem;
+        }
+
+        /* メインコンテンツエリア */
+        .main-content {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .video-info {
+            padding: 2rem;
+        }
+
+        .video-title {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        .meta-info {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #007bff;
+            color: #007bff;
+        }
+
+        .video-description {
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        /* 関連動画エリア */
+        .related-videos {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .related-video-card {
+            display: grid;
+            grid-template-columns: 160px 1fr;
+            gap: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .related-video-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .thumbnail {
+            width: 100%;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .related-video-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .related-video-title {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #1a1a1a;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .event-details {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .event-details h3 {
+            margin-bottom: 1rem;
+        }
+
+        .detail-item {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .tag {
+            background: #e9ecef;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #495057;
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .related-videos {
+                display: grid;
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <main class="main-content">
+            <div class="video-container">
+                <img src="/api/placeholder/1280/720" alt="動画プレースホルダー" style="width:100%; height:100%; position:absolute;">
+                <div class="play-button" style="position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); font-size:4rem; color:white; cursor:pointer;">
+                    <i class="fas fa-play-circle"></i>
+                </div>
+            </div>
+            
+            <div class="video-info">
+                <h1 class="video-title">Tech Summit 2024 基調講演：AIが変えるビジネスの未来</h1>
+                
+                <div class="meta-info">
+                    <span class="meta-item">
+                        <i class="far fa-calendar"></i>
+                        2024.11.15
+                    </span>
+                    <span class="meta-item">
+                        <i class="far fa-eye"></i>
+                        1,234 views
+                    </span>
+                    <span class="meta-item">
+                        <i class="far fa-clock"></i>
+                        45:30
+                    </span>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn btn-primary">
+                        <i class="fas fa-calendar-plus"></i>
+                        セミナー申し込み
+                    </button>
+                    <button class="btn btn-outline">
+                        <i class="far fa-bookmark"></i>
+                        保存
+                    </button>
+                </div>
+
+                <div class="tags">
+                    <span class="tag">#AI</span>
+                    <span class="tag">#ビジネス</span>
+                    <span class="tag">#テクノロジー</span>
+                    <span class="tag">#イノベーション</span>
+                </div>
+
+                <div class="video-description">
+                    <h2>動画の説明</h2>
+                    <p>本セッションでは、AI技術の最新トレンドとビジネスへの実践的な活用方法について解説します。
+                    第一線で活躍する専門家が、実例を交えながら詳しく説明します。</p>
+                </div>
+
+                <div class="event-details">
+                    <h3>イベント情報</h3>
+                    <div class="detail-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>東京ビッグサイト</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-user"></i>
+                        <span>講演者：山田太郎（AI研究所所長）</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-users"></i>
+                        <span>定員：500名</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-yen-sign"></i>
+                        <span>参加費：5,000円</span>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <aside class="related-videos">
+            <h2 style="margin-bottom: 1rem;">関連動画</h2>
+            
+            <div class="related-video-card">
+                <img src="/api/placeholder/160/90" alt="関連動画1" class="thumbnail">
+                <div class="related-video-info">
+                    <h3 class="related-video-title">データ分析が導く次世代のビジネス戦略</h3>
+                    <div style="font-size: 0.8rem; color: #666;">
+                        <div>35:20</div>
+                        <div>825 views</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="related-video-card">
+                <img src="/api/placeholder/160/90" alt="関連動画2" class="thumbnail">
+                <div class="related-video-info">
+                    <h3 class="related-video-title">クラウドコンピューティングの最新動向</h3>
+                    <div style="font-size: 0.8rem; color: #666;">
+                        <div>42:15</div>
+                        <div>654 views</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="related-video-card">
+                <img src="/api/placeholder/160/90" alt="関連動画3" class="thumbnail">
+                <div class="related-video-info">
+                    <h3 class="related-video-title">セキュリティ対策の実践ガイド</h3>
+                    <div style="font-size: 0.8rem; color: #666;">
+                        <div>38:45</div>
+                        <div>742 views</div>
+                    </div>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <script>
+        // 動画再生ボタンのクリックイベント
+        document.querySelector('.play-button').addEventListener('click', function() {
+            alert('動画を再生します');
+        });
+
+        // イベント申し込みボタンのクリックイベント
+        document.querySelector('.btn-primary').addEventListener('click', function() {
+            alert('イベント申し込みページに遷移します');
+        });
+
+        // 保存ボタンのクリックイベント
+        document.querySelector('.btn-outline').addEventListener('click', function() {
+            this.innerHTML = '<i class="fas fa-bookmark"></i> 保存済み';
+            this.style.background = '#e9ecef';
+        });
+
+        // 関連動画カードのクリックイベント
+        document.querySelectorAll('.related-video-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const title = this.querySelector('.related-video-title').textContent;
+                alert(`${title}の動画ページに移動します`);
+            });
+        });
+    </script>
+</body>
+</html>

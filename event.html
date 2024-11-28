@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Summit 2024</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: #333;
+        }
+
+        /* ヘッダー */
+        .header {
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* キービジュアル */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('/api/placeholder/1920/1080');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 2rem;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero-subtitle {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.3s;
+            opacity: 0;
+            animation-fill-mode: forwards;
+        }
+
+        /* お知らせセクション */
+        .news {
+            padding: 5rem 1rem;
+            background: #f8f9fa;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .news-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .news-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .news-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .news-content {
+            padding: 1.5rem;
+        }
+
+        /* 動画セクション */
+        .video-section {
+            padding: 5rem 1rem;
+            background: white;
+        }
+
+        .video-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .video-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .video-thumbnail {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-thumbnail img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background: rgba(255,255,255,0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        /* 出展企業セクション */
+        .exhibitors {
+            padding: 5rem 1rem;
+            background: #f8f9fa;
+        }
+
+        .exhibitor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .exhibitor-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .exhibitor-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .exhibitor-logo {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        /* セミナーセクション */
+        .seminars {
+            padding: 5rem 1rem;
+            background: white;
+        }
+
+        .seminar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .seminar-card {
+            background: #f8f9fa;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .seminar-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        /* タイムスケジュール */
+        .schedule {
+            padding: 5rem 1rem;
+            background: #f8f9fa;
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .schedule-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            padding: 1.5rem;
+        }
+
+        .schedule-time {
+            font-size: 1.5rem;
+            color: #007bff;
+            margin-bottom: 1rem;
+        }
+
+        /* 共通スタイル */
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-outline {
+            border: 2px solid #007bff;
+            color: #007bff;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">Tech Summit 2024</div>
+            <nav>
+                <a href="#" class="btn btn-outline">ログイン</a>
+                <a href="#" class="btn btn-primary">イベント登録</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Tech Summit 2024</h1>
+            <p class="hero-subtitle">未来のテクノロジーが、ここから始まる</p>
+            <a href="#register" class="btn btn-primary">参加登録する</a>
+        </div>
+    </section>
+
+    <section class="news">
+        <h2 class="section-title">お知らせ</h2>
+        <div class="news-grid">
+            <article class="news-card">
+                <div class="news-content">
+                    <time>2024.11.01</time>
+                    <h3>基調講演スピーカー決定</h3>
+                    <p>世界的なAI研究者が登壇決定！</p>
+                </div>
+            </article>
+            <article class="news-card">
+                <div class="news-content">
+                    <time>2024.11.15</time>
+                    <h3>出展企業募集開始</h3>
+                    <p>革新的な技術を持つ企業を募集中</p>
+                </div>
+            </article>
+            <article class="news-card">
+                <div class="news-content">
+                    <time>2024.11.30</time>
+                    <h3>早期割引チケット販売開始</h3>
+                    <p>12月末までの特別価格！</p>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <section class="video-section">
+        <h2 class="section-title">関連動画</h2>
+        <div class="video-container">
+            <div class="video-card">
+                <div class="video-thumbnail">
+                    <img src="https://topics.pivotmedia.co.jp/wp-content/uploads/2022/11/productteam_1.jpg" alt="基調講演">
+                    <div class="play-button">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <div class="news-content">
+                    <h3>基調講演ダイジェスト</h3>
+                    <p>昨年の様子をチェック</p>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-thumbnail">
+                    <img src="https://topics.pivotmedia.co.jp/wp-content/uploads/2022/11/productteam_1.jpg" alt="会場紹介">
+                    <div class="play-button">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <div class="news-content">
+                    <h3>会場紹介</h3>
+                    <p>最新設備を完備</p>
+                </div>
+            </div>
+            <div class="video-card">
+                <div class="video-thumbnail">
+                    <img src="https://topics.pivotmedia.co.jp/wp-content/uploads/2022/11/productteam_1.jpg" alt="展示デモ">
+                    <div class="play-button">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <div class="news-content">
+                    <h3>展示デモ映像</h3>
+                    <p>注目の出展内容をプレビュー</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="exhibitors">
+        <h2 class="section-title">出展企業</h2>
+        <div class="exhibitor-grid">
+            <div class="exhibitor-card">
+                <img src="/api/placeholder/300/200" alt="企業A" class="exhibitor-logo">
+                <div class="news-content">
+                    <h3>Tech Company A</h3>
+                    <p>AI・機械学習ソリューション</p>
+                </div>
+            </div>
+            <div class="exhibitor-card">
+                <img src="/api/placeholder/300/200" alt="企業B" class="exhibitor-logo">
+                <div class="news-content">
+                    <h3>Tech Company B</h3>
+                    <p>クラウドインフラ</p>
+                </div>
+            </div>
+            <div class="exhibitor-card">
+                <img src="/api/placeholder/300/200" alt="企業C" class="exhibitor-logo">
+                <div class="news-content">
+                    <h3>Tech Company C</h3>
+                    <p>セキュリティソリューション</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="seminars">
+        <h2 class="section-title">セミナー</h2>
+        <div class="seminar-grid">
+            <div class="seminar-card">
+                <img src="/api/placeholder/400/200" alt="セミナー1" class="seminar-image">
+                <div class="news-content">
+                    <h3>AI導入実践セミナー</h3>
+                    <p>日時：2024.12.1 13:00-14:30</p>
+                    <p>定員：50名</p>
+                    <a href="#" class="btn btn-primary">申し込む</a>
+                </div>
+            </div>
+            <div class="seminar-card">
+                <img src="/api/placeholder/400/200" alt="セミナー2" class="seminar-image">
+                <div class="news-content">
+                    <h3>クラウド移行戦略</h3>
+                    <p>日時：2024.12.1 15:00-16:30</p>
+                    <p>定員：50名</p>
+                    <a href="#" class="btn btn-primary">申し込む</a>
+                </div>
+            </div>
+            <div class="seminar-card">
+                <img src="/api/placeholder/400/200" alt="セミナー3" class="seminar-image">
+                <div class="news-content">
+                    <h3>セキュリティ対策最前線</h3>
+                    <p>日時：2024.12.1 17:00-18:30</p>
+                    <p>定員：50名</p>
+                    <a href="#" class="btn btn-primary">申し込む</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="schedule">
+        <h2 class="section-title">タイムスケジュール</h2>
+        <div class="schedule-grid">
+            <div class="schedule-card">
+                <img src="/api/placeholder/400/200" alt="午前の部" class="seminar-image">
+                <div class="schedule-time">10:00 - 12:00</div>
+                <h3>午前の部</h3>
+                <ul>
+                    <li>10:00 開場・受付開始</li>
+                    <li>10:30 オープニングセッション</li>
+                    <li>11:00 基調講演</li>
+                </ul>
+            </div>
+            <div class="schedule-card">
+                <img src="/api/placeholder/400/200" alt="午後の部" class="seminar-image">
+                <div class="schedule-time">13:00 - 15:00</div>
+                <h3>午後の部</h3>
+                <ul>
+                    <li>13:00 分科会セッション</li>
+                    <li>14:00 企業プレゼンテーション</li>
+                    <li>15:00 パネルディスカッション</li>
+                </ul>
+            </div>
+            <div class="schedule-card">
+                <img src="/api/placeholder/400/200" alt="夕方の部" class="seminar-image">
+                <div class="schedule-time">16:00 - 18:00</div>
+                <h3>夕方の部</h3>
+                <ul>
+                    <li>16:00 ネットワーキング</li>
+                    <li>17:00 クロージングセッション</li>
+                    <li>18:00 閉会</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // スクロール時のヘッダー透明度制御
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.backgroundColor = 'rgba(255, 255, 255, 0.95)';
+            } else {
+                header.style.backgroundColor = 'rgba(255, 255, 255, 1)';
+            }
+        });
+
+        // 動画再生ボタンクリックハンドラ
+        document.querySelectorAll('.play-button').forEach(button => {
+            button.addEventListener('click', function() {
+                // ここに実際の動画再生処理を追加
+                alert('動画を再生します');
+            });
+        });
+
+        // セミナー申し込みハンドラ
+        document.querySelectorAll('.seminar-card .btn').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const seminarTitle = this.closest('.seminar-card').querySelector('h3').textContent;
+                const confirmed = confirm(`${seminarTitle}に申し込みますか？`);
+                if (confirmed) {
+                    alert('セミナーの申し込みを受け付けました。\n詳細は登録メールアドレスに送信されます。');
+                }
+            });
+        });
+
+        // スムーズスクロール
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
