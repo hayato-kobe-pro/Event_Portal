@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>通知・お気に入りイベント</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .tab {
+            padding: 1rem 2rem;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .tab.active {
+            background: #007bff;
+            color: white;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #dc3545;
+            color: white;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+        }
+
+        .event-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .event-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .event-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .event-content {
+            padding: 1.5rem;
+        }
+
+        .event-date {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(0,0,0,0.8);
+            color: white;
+            padding: 0.5rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .new-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: #dc3545;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .event-meta {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .category-tag {
+            background: #e9ecef;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+            border: none;
+        }
+
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #007bff;
+            color: #007bff;
+        }
+
+        .notification-date {
+            color: #666;
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .filter-bar {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .filter-select {
+            padding: 0.5rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .event-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="tabs">
+            <div class="tab active" onclick="switchTab('notifications')">
+                通知
+                <span class="notification-badge">5</span>
+            </div>
+            <div class="tab" onclick="switchTab('favorites')">
+                お気に入り
+            </div>
+        </div>
+
+        <div class="filter-bar">
+            <select class="filter-select">
+                <option>すべてのカテゴリ</option>
+                <option>AI・機械学習</option>
+                <option>マーケティング</option>
+                <option>スタートアップ</option>
+            </select>
+            <select class="filter-select">
+                <option>開催日時順</option>
+                <option>新着順</option>
+                <option>人気順</option>
+            </select>
+            <select class="filter-select">
+                <option>すべての開催形式</option>
+                <option>オフライン</option>
+                <option>オンライン</option>
+            </select>
+        </div>
+
+        <div class="event-grid">
+            <!-- 新着通知イベント -->
+            <div class="event-card">
+                <img src="/api/placeholder/400/200" alt="AI Conference" class="event-image">
+                <span class="event-date">2024.12.15</span>
+                <span class="new-badge">NEW</span>
+                <div class="event-content">
+                    <div class="notification-date">
+                        <i class="far fa-clock"></i> 30分前に通知
+                    </div>
+                    <h3>AI Conference 2024</h3>
+                    <div class="event-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> 東京</span>
+                        <span><i class="fas fa-yen-sign"></i> 5,000円</span>
+                    </div>
+                    <span class="category-tag">AI・機械学習</span>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">申し込む</button>
+                        <button class="btn btn-outline" onclick="toggleFavorite(this)">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- お気に入り済みイベント -->
+            <div class="event-card">
+                <img src="https://topics.pivotmedia.co.jp/wp-content/uploads/2022/11/productteam_1.jp" alt="Marketing Summit" class="event-image">
+                <span class="event-date">2024.12.20</span>
+                <div class="event-content">
+                    <div class="notification-date">
+                        <i class="far fa-clock"></i> 2時間前に通知
+                    </div>
+                    <h3>デジタルマーケティングサミット</h3>
+                    <div class="event-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> 大阪</span>
+                        <span><i class="fas fa-yen-sign"></i> 無料</span>
+                    </div>
+                    <span class="category-tag">マーケティング</span>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">申し込む</button>
+                        <button class="btn btn-outline favorite" onclick="toggleFavorite(this)">
+                            <i class="fas fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 通常のイベント -->
+            <div class="event-card">
+                <img src="/api/placeholder/400/200" alt="Startup Event" class="event-image">
+                <span class="event-date">2024.12.25</span>
+                <div class="event-content">
+                    <div class="notification-date">
+                        <i class="far fa-clock"></i> 1日前に通知
+                    </div>
+                    <h3>スタートアップミートアップ</h3>
+                    <div class="event-meta">
+                        <span><i class="fas fa-map-marker-alt"></i> オンライン</span>
+                        <span><i class="fas fa-yen-sign"></i> 2,000円</span>
+                    </div>
+                    <span class="category-tag">スタートアップ</span>
+                    <div class="action-buttons">
+                        <button class="btn btn-primary">申し込む</button>
+                        <button class="btn btn-outline" onclick="toggleFavorite(this)">
+                            <i class="far fa-heart"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function switchTab(tab) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            event.currentTarget.classList.add('active');
+            
+            // タブ切り替え時の処理をここに追加
+            if (tab === 'favorites') {
+                alert('お気に入りイベントを表示します');
+            } else {
+                alert('通知イベントを表示します');
+            }
+        }
+
+        function toggleFavorite(button) {
+            const icon = button.querySelector('i');
+            if (icon.classList.contains('far')) {
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                button.classList.add('favorite');
+                alert('お気に入りに追加しました');
+            } else {
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                button.classList.remove('favorite');
+                alert('お気に入りから削除しました');
+            }
+        }
+
+        // フィルター変更時の処理
+        document.querySelectorAll('.filter-select').forEach(select => {
+            select.addEventListener('change', function() {
+                alert(`フィルター「${this.value}」が選択されました`);
+            });
+        });
+    </script>
+</body>
+</html>

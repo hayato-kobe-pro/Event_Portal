@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>スポンサー募集 - Tech Summit 2024</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* ヒーローセクション */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('/api/placeholder/1920/1080');
+            background-size: cover;
+            color: white;
+            padding: 5rem 1rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* イベント概要 */
+        .event-overview {
+            max-width: 800px;
+            margin: -3rem auto 0;
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        /* スポンサープラン */
+        .plans-section {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 0 1rem;
+        }
+
+        .plans-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .plan-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .plan-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .plan-header {
+            padding: 2rem;
+            background: #007bff;
+            color: white;
+            text-align: center;
+        }
+
+        .plan-price {
+            font-size: 2rem;
+            margin: 1rem 0;
+        }
+
+        .plan-content {
+            padding: 2rem;
+        }
+
+        .benefit-list {
+            list-style: none;
+            margin-bottom: 2rem;
+        }
+
+        .benefit-list li {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .benefit-list li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #007bff;
+        }
+
+        /* お問い合わせフォーム */
+        .contact-section {
+            background: white;
+            padding: 4rem 1rem;
+        }
+
+        .contact-container {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: #007bff;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s;
+        }
+
+        .btn:hover {
+            background: #0056b3;
+        }
+
+        /* その他 */
+        .section-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ヒーローセクション -->
+    <section class="hero">
+        <h1>Tech Summit 2024<br>スポンサー募集</h1>
+        <p>次世代のテクノロジーイベントで、あなたのブランドを輝かせましょう</p>
+    </section>
+
+    <!-- イベント概要 -->
+    <div class="event-overview">
+        <div class="stats">
+            <div class="stat-item">
+                <div class="stat-number">5,000+</div>
+                <div>来場者数</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">100+</div>
+                <div>講演者</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">50+</div>
+                <div>セッション</div>
+            </div>
+        </div>
+        <p>Tech Summit 2024は、AI、クラウド、セキュリティなど、最新のテクノロジートレンドを網羅する2日間のカンファレンスです。業界のリーダーたちが一堂に会し、次世代のビジネステクノロジーについて議論します。</p>
+    </div>
+
+    <!-- スポンサープラン -->
+    <section class="plans-section">
+        <h2 class="section-title">スポンサープラン</h2>
+        <div class="plans-grid">
+            <!-- プラチナプラン -->
+            <div class="plan-card">
+                <div class="plan-header">
+                    <h3>プラチナスポンサー</h3>
+                    <div class="plan-price">¥1,000,000</div>
+                    <div>限定5社</div>
+                </div>
+                <div class="plan-content">
+                    <ul class="benefit-list">
+                        <li>メインステージでの30分プレゼンテーション</li>
+                        <li>展示ブース（6小間）</li>
+                        <li>ウェブサイト上部へのロゴ掲載</li>
+                        <li>イベントパンフレット2ページ広告</li>
+                        <li>参加者リスト提供</li>
+                        <li>VIPラウンジ利用権</li>
+                        <li>招待券10枚</li>
+                    </ul>
+                    <button class="btn" onclick="openContactForm('プラチナ')">お問い合わせ</button>
+                </div>
+            </div>
+
+            <!-- ゴールドプラン -->
+            <div class="plan-card">
+                <div class="plan-header" style="background: #ffd700;">
+                    <h3>ゴールドスポンサー</h3>
+                    <div class="plan-price">¥500,000</div>
+                    <div>限定8社</div>
+                </div>
+                <div class="plan-content">
+                    <ul class="benefit-list">
+                        <li>分科会での15分プレゼンテーション</li>
+                        <li>展示ブース（4小間）</li>
+                        <li>ウェブサイト中部へのロゴ掲載</li>
+                        <li>イベントパンフレット1ページ広告</li>
+                        <li>参加者リスト提供</li>
+                        <li>招待券5枚</li>
+                    </ul>
+                    <button class="btn" onclick="openContactForm('ゴールド')">お問い合わせ</button>
+                </div>
+            </div>
+
+            <!-- シルバープラン -->
+            <div class="plan-card">
+                <div class="plan-header" style="background: #808080;">
+                    <h3>シルバースポンサー</h3>
+                    <div class="plan-price">¥300,000</div>
+                    <div>限定10社</div>
+                </div>
+                <div class="plan-content">
+                    <ul class="benefit-list">
+                        <li>展示ブース（2小間）</li>
+                        <li>ウェブサイトへのロゴ掲載</li>
+                        <li>イベントパンフレット1/2ページ広告</li>
+                        <li>招待券3枚</li>
+                    </ul>
+                    <button class="btn" onclick="openContactForm('シルバー')">お問い合わせ</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- お問い合わせフォーム -->
+    <section class="contact-section" id="contact">
+        <div class="contact-container">
+            <h2 class="section-title">スポンサーお問い合わせ</h2>
+            <form id="contactForm" onsubmit="submitForm(event)">
+                <div class="form-group">
+                    <label class="form-label">会社名</label>
+                    <input type="text" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">担当者名</label>
+                    <input type="text" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">メールアドレス</label>
+                    <input type="email" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">興味のあるプラン</label>
+                    <select class="form-control" required>
+                        <option value="">選択してください</option>
+                        <option>プラチナスポンサー</option>
+                        <option>ゴールドスポンサー</option>
+                        <option>シルバースポンサー</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">お問い合わせ内容</label>
+                    <textarea class="form-control" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn">送信する</button>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        function openContactForm(plan) {
+            document.querySelector('select.form-control').value = plan + 'スポンサー';
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function submitForm(event) {
+            event.preventDefault();
+            alert('お問い合わせを受け付けました。担当者より連絡させていただきます。');
+            event.target.reset();
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>スポンサー募集管理 - イベントポータル</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+        }
+
+        /* サイドバー */
+        .sidebar {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            height: fit-content;
+        }
+
+        .event-info {
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .recruitment-stats {
+            display: grid;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        /* メインコンテンツ */
+        .main-content {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .content-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .sponsor-plan {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .plan-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 1.5rem;
+            background: #f8f9fa;
+        }
+
+        .plan-header {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .sponsor-applications {
+            margin-top: 2rem;
+        }
+
+        .application-card {
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: 1rem;
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            align-items: center;
+        }
+
+        .company-logo {
+            width: 60px;
+            height: 60px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #007bff;
+            color: #007bff;
+        }
+
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .status-pending {
+            background: #ffeeba;
+            color: #856404;
+        }
+
+        .status-approved {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .match-score {
+            padding: 0.5rem;
+            background: #e9ecef;
+            border-radius: 4px;
+            font-size: 0.9rem;
+            color: #495057;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            background: none;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-btn.active {
+            border-bottom-color: #007bff;
+            color: #007bff;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- サイドバー -->
+        <aside class="sidebar">
+            <div class="event-info">
+                <h2>Tech Summit 2024</h2>
+                <p>2024.12.15 - 2024.12.16</p>
+                <p>東京ビッグサイト</p>
+            </div>
+
+            <div class="recruitment-stats">
+                <div class="stat-card">
+                    <div class="stat-number">15</div>
+                    <div>スポンサー応募</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">8</div>
+                    <div>確定スポンサー</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">7</div>
+                    <div>商談中</div>
+                </div>
+            </div>
+
+            <button class="btn btn-primary" style="width: 100%;">
+                <i class="fas fa-plus"></i> 新規募集プラン作成
+            </button>
+        </aside>
+
+        <!-- メインコンテンツ -->
+        <main class="main-content">
+            <!-- スポンサープラン -->
+            <section class="content-card">
+                <h2>スポンサープラン</h2>
+                <div class="sponsor-plan">
+                    <div class="plan-card">
+                        <div class="plan-header">
+                            <h3>プラチナスポンサー</h3>
+                            <p>募集金額: ¥1,000,000</p>
+                        </div>
+                        <ul style="margin-bottom: 1rem;">
+                            <li>メインステージでの30分プレゼン</li>
+                            <li>ブース出展（6小間）</li>
+                            <li>バナー広告（サイト上部）</li>
+                        </ul>
+                        <div>募集数: 2/5</div>
+                    </div>
+                    <div class="plan-card">
+                        <div class="plan-header">
+                            <h3>ゴールドスポンサー</h3>
+                            <p>募集金額: ¥500,000</p>
+                        </div>
+                        <ul style="margin-bottom: 1rem;">
+                            <li>分科会での15分プレゼン</li>
+                            <li>ブース出展（4小間）</li>
+                            <li>バナー広告（サイト中部）</li>
+                        </ul>
+                        <div>募集数: 4/8</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- スポンサー応募一覧 -->
+            <section class="content-card">
+                <div class="tab-buttons">
+                    <button class="tab-btn active">新規応募</button>
+                    <button class="tab-btn">商談中</button>
+                    <button class="tab-btn">確定</button>
+                </div>
+
+                <div class="sponsor-applications">
+                    <div class="application-card">
+                        <img src="/api/placeholder/60/60" alt="Company A" class="company-logo">
+                        <div>
+                            <h3>テクノロジー株式会社</h3>
+                            <p>プラチナスポンサープラン</p>
+                            <div style="color: #666;">応募日: 2024.11.01</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div class="match-score">マッチ度 95%</div>
+                            <div class="status-badge status-pending">審査中</div>
+                            <button class="btn btn-outline" style="margin-top: 0.5rem;">詳細を見る</button>
+                        </div>
+                    </div>
+
+                    <div class="application-card">
+                        <img src="/api/placeholder/60/60" alt="Company B" class="company-logo">
+                        <div>
+                            <h3>イノベーション株式会社</h3>
+                            <p>ゴールドスポンサープラン</p>
+                            <div style="color: #666;">応募日: 2024.11.02</div>
+                        </div>
+                        <div style="text-align: right;">
+                            <div class="match-score">マッチ度 88%</div>
+                            <div class="status-badge status-approved">商談中</div>
+                            <button class="btn btn-outline" style="margin-top: 0.5rem;">詳細を見る</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        // タブ切り替え
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                alert(`${this.textContent}の一覧を表示します`);
+            });
+        });
+
+        // 新規募集プラン作成
+        document.querySelector('.btn-primary').addEventListener('click', function() {
+            alert('新規スポンサープランの作成画面を開きます');
+        });
+
+        // 詳細ボタン
+        document.querySelectorAll('.btn-outline').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const company = this.closest('.application-card').querySelector('h3').textContent;
+                alert(`${company}の応募詳細を表示します`);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>イベント通知設定</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }
+
+        body {
+            background: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .settings-header {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .notification-type {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+            color: #2c3e50;
+        }
+
+        .toggle-switch {
+            position: relative;
+            display: inline-block;
+            width: 60px;
+            height: 34px;
+        }
+
+        .toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .4s;
+            border-radius: 34px;
+        }
+
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+        }
+
+        input:checked + .slider {
+            background-color: #007bff;
+        }
+
+        input:checked + .slider:before {
+            transform: translateX(26px);
+        }
+
+        .tag-input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            margin-bottom: 1rem;
+        }
+
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background: #e9ecef;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tag button {
+            background: none;
+            border: none;
+            color: #666;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .notification-option {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .condition-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .condition-row {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        select, input[type="number"] {
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            flex: 1;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #007bff;
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid #007bff;
+            color: #007bff;
+        }
+
+        .notification-preview {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .condition-row {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="settings-header">
+            <h1>イベント通知設定</h1>
+            <p>興味のあるイベントの通知条件を設定できます</p>
+        </div>
+
+        <div class="notification-type">
+            <h2 class="section-title">通知方法の設定</h2>
+            <div class="notification-option">
+                <span>メール通知</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="notification-option">
+                <span>ブラウザ通知</span>
+                <label class="toggle-switch">
+                    <input type="checkbox">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="notification-option">
+                <span>通知頻度</span>
+                <select>
+                    <option>リアルタイム</option>
+                    <option>1日1回</option>
+                    <option>週1回まとめて</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="notification-type">
+            <h2 class="section-title">キーワード設定</h2>
+            <input type="text" class="tag-input" placeholder="キーワードを入力してEnterを押してください">
+            <div class="tags-container" id="keywordTags">
+                <!-- タグは動的に追加されます -->
+            </div>
+        </div>
+
+        <div class="notification-type">
+            <h2 class="section-title">カテゴリ設定</h2>
+            <div class="notification-option">
+                <span>AI・機械学習</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="notification-option">
+                <span>デジタルマーケティング</span>
+                <label class="toggle-switch">
+                    <input type="checkbox" checked>
+                    <span class="slider"></span>
+                </label>
+            </div>
+            <div class="notification-option">
+                <span>クラウド・インフラ</span>
+                <label class="toggle-switch">
+                    <input type="checkbox">
+                    <span class="slider"></span>
+                </label>
+            </div>
+        </div>
+
+        <div class="notification-type">
+            <h2 class="section-title">条件設定</h2>
+            <div class="condition-group">
+                <div class="condition-row">
+                    <select>
+                        <option>開催地域</option>
+                        <option>東京</option>
+                        <option>大阪</option>
+                        <option>オンライン</option>
+                    </select>
+                    <select>
+                        <option>参加費</option>
+                        <option>無料</option>
+                        <option>5000円未満</option>
+                        <option>10000円未満</option>
+                    </select>
+                </div>
+                <div class="condition-row">
+                    <select>
+                        <option>開催形式</option>
+                        <option>オフライン</option>
+                        <option>オンライン</option>
+                        <option>ハイブリッド</option>
+                    </select>
+                    <select>
+                        <option>イベント規模</option>
+                        <option>50人未満</option>
+                        <option>50-200人</option>
+                        <option>200人以上</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="notification-preview">
+                <h3>通知プレビュー</h3>
+                <p>設定した条件に基づく通知のサンプルです：</p>
+                <div style="margin-top: 1rem; padding: 1rem; background: white; border-radius: 6px;">
+                    <strong>新着イベント</strong>
+                    <p>「AI活用ビジネスセミナー2024」が追加されました</p>
+                    <small>カテゴリ：AI・機械学習 / 開催地：東京 / 参加費：無料</small>
+                </div>
+            </div>
+        </div>
+
+        <div style="margin-top: 2rem; text-align: center;">
+            <button class="btn btn-primary">設定を保存</button>
+            <button class="btn btn-outline">リセット</button>
+        </div>
+    </div>
+
+    <script>
+        // キーワードタグの追加
+        const tagInput = document.querySelector('.tag-input');
+        const tagsContainer = document.getElementById('keywordTags');
+        let tags = ['AI', 'ビジネス', 'スタートアップ'];
+
+        function renderTags() {
+            tagsContainer.innerHTML = tags.map(tag => `
+                <span class="tag">
+                    ${tag}
+                    <button onclick="removeTag('${tag}')">&times;</button>
+                </span>
+            `).join('');
+        }
+
+        tagInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                const tag = this.value.trim();
+                if (tag && !tags.includes(tag)) {
+                    tags.push(tag);
+                    renderTags();
+                }
+                this.value = '';
+            }
+        });
+
+        function removeTag(tag) {
+            tags = tags.filter(t => t !== tag);
+            renderTags();
+        }
+
+        // 初期タグの表示
+        renderTags();
+
+        // 保存ボタンのクリックイベント
+        document.querySelector('.btn-primary').addEventListener('click', function() {
+            alert('設定を保存しました');
+        });
+
+        // リセットボタンのクリックイベント
+        document.querySelector('.btn-outline').addEventListener('click', function() {
+            if (confirm('設定をリセットしますか？')) {
+                tags = [];
+                renderTags();
+                document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+                document.querySelectorAll('select').forEach(select => {
+                    select.selectedIndex = 0;
+                });
+            }
+        });
+    </script>
+</body>
+</html>
